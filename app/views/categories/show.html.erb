@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+<ul>
+<!-- agregado para index anidado -->
+<% @category.products.each do |product| %>
+  <li>
+    <%= product.name %>
+    <%= link_to "X", category_product_path(@category, product),
+    method: :delete %>
+ </li>
+<% end %>
+</ul>
+
+
+<%= form_with(model: [@category, Product.new], local: true) do |form| %>
+<%= form.hidden_field :category_id, value: @category.id%>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <%= form.label :price %>
+    <%= form.text_field :price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
